@@ -1,15 +1,10 @@
-from rest_framework import serializers
 import iati
+from rest_framework import serializers
+from api.generics.serializers import DynamicFieldsModelSerializer
 
 
-class OrganisationDetailSerializer(serializers.ModelSerializer):
+class OrganisationSerializer(DynamicFieldsModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='organisation-detail')
-
-    activity_reporting_organisation = serializers.RelatedField(many=True)
-    activity_set = serializers.RelatedField(many=True)
-    activityparticipatingorganisation_set = serializers.RelatedField(many=True)
-    transaction_providing_organisation = serializers.RelatedField(many=True)
-    transaction_receiving_organisation = serializers.RelatedField(many=True)
 
     class Meta:
         model = iati.models.Organisation
@@ -29,12 +24,3 @@ class OrganisationDetailSerializer(serializers.ModelSerializer):
             'transaction_providing_organisation',
             'transaction_receiving_organisation',
         )
-
-    def transform_url(self, obj, value):
-        pass
-
-
-class OrganisationListSerializer(OrganisationDetailSerializer):
-    class Meta:
-        model = iati.models.Organisation
-        fields = ('url', 'code', 'name',)

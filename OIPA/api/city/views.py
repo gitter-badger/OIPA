@@ -1,13 +1,15 @@
-from rest_framework import generics
 import geodata
 from api.city import serializers
+from api.generics.views import DynamicListAPIView
+from api.generics.views import DynamicRetrieveAPIView
 
 
-class CityList(generics.ListAPIView):
+class CityList(DynamicListAPIView):
     queryset = geodata.models.City.objects.all()
-    serializer_class = serializers.CityListSerializer
+    serializer_class = serializers.CitySerializer
+    fields = ('url', 'id', 'name')
 
 
-class CityDetail(generics.RetrieveAPIView):
+class CityDetail(DynamicRetrieveAPIView):
     queryset = geodata.models.City.objects.all()
-    serializer_class = serializers.CityDetailSerializer
+    serializer_class = serializers.CitySerializer

@@ -1,12 +1,11 @@
 from rest_framework import serializers
 import iati
+from api.generics.serializers import DynamicFieldsModelSerializer
 
 
-class SectorDetailSerializer(serializers.ModelSerializer):
+class SectorSerializer(DynamicFieldsModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='sector-detail')
-
-    activity_set = serializers.RelatedField(many=True)
-    activitysector_set = serializers.RelatedField(many=True)
+    code = serializers.CharField()
 
     class Meta:
         model = iati.models.Sector
@@ -21,9 +20,3 @@ class SectorDetailSerializer(serializers.ModelSerializer):
             'activity_set',
             'activitysector_set',
         )
-
-
-class SectorListSerializer(SectorDetailSerializer):
-    class Meta:
-        model = iati.models.Sector
-        fields = ('url', 'code', 'name',)

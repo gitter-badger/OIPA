@@ -94,8 +94,7 @@ class IndicatorDataUploadAdmin(MultiUploadAdmin):
     multiupload_form = True
     multiupload_maxfilesize = 6 * 2 ** 20 # 6 Mb
     multiupload_minfilesize = 0
-    multiupload_acceptedformats = ("text/csv", "text/xml")
-
+    multiupload_acceptedformats = ( "text/csv", "text/xml", "text/comma-separated-values")
     def process_uploaded_file(self, uploaded, object, request, **kwargs):
         '''
         This method will be called for every csv file uploaded.

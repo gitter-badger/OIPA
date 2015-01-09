@@ -1,12 +1,14 @@
 from rest_framework import serializers
 import geodata
+from api.generics.serializers import DynamicFieldsModelSerializer
+from api.country.serializers import CountrySerializer
+from api.fields import GeometryField
 
 
-class CityDetailSerializer(serializers.ModelSerializer):
+class CitySerializer(DynamicFieldsModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='city-detail')
-
-    indicatordata_set = serializers.RelatedField(many=True)
-    capital_city = serializers.RelatedField(many=True)
+    country = CountrySerializer(fields=('url', 'code', 'name'))
+    location = GeometryField()
 
     class Meta:
         model = geodata.models.City
@@ -17,17 +19,5 @@ class CityDetailSerializer(serializers.ModelSerializer):
             'name',
             'country',
             'location',
-            'ascii_name',
-            'alt_name',
-            'namepar',
-
-            # Reverse linked data
-            'indicatordata_set',
-            'capital_city',
+            'is_capital',
         )
-
-
-class CityListSerializer(CityDetailSerializer):
-    class Meta:
-        model = geodata.models.City
-        fields = ('url', 'id', 'name')
