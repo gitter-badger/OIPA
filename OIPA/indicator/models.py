@@ -40,12 +40,11 @@ class Indicator(models.Model):
         return self.friendly_label
 
 class IndicatorData(models.Model):
+    id = models.IntegerField(primary_key=True)
     indicator = models.ForeignKey(Indicator)
     country = models.ForeignKey(Country, null=True)
     city = models.ForeignKey(City, null=True)
     region = models.ForeignKey(Region, null=True)
-    value = models.DecimalField(null=True, blank=True, db_index=True, max_digits=17, decimal_places=4)
-    year = models.IntegerField(max_length=5)
     selection_type = models.CharField(max_length=255, null=True, blank=True)
 
     class Meta:
@@ -53,6 +52,15 @@ class IndicatorData(models.Model):
 
     def __unicode__(self):
         return self.indicator.friendly_label
+
+class IndicatorDataValue(models.Model):
+    id = models.IntegerField(primary_key=True)
+    indicator_data = models.ForeignKey(IndicatorData, db_index=True)
+    year = models.IntegerField(max_length=5)
+    value = models.DecimalField(null=True, blank=True, db_index=True, max_digits=17, decimal_places=4)
+
+    class Meta:
+        verbose_name_plural = "indicator data value"
 
 def file_upload_to(instance, filename):
     path = settings.ADMINFILES_UPLOAD_TO
@@ -63,8 +71,7 @@ def file_upload_to(instance, filename):
         name = filename
         ext = None
     name = slugify(name).replace('-','_')
-    return os.path.join(path, '%s%s%s' % (name, ext and '.' or '',
-        ext or ''))
+    return os.path.join(path, '%s%s%s' % (name, ext and '.' or '', ext or ''))
 
 class CsvUploadLog(models.Model):
     upload_date = models.DateTimeField(_('Upload date'), auto_now_add=True)

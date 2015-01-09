@@ -4,7 +4,7 @@ import csv
 from indicator.models import IndicatorTopic, IndicatorSource, Indicator, IndicatorData, Country, Region
 import os.path
 
-class WBI_Parser():
+class WbiParser():
 
     def import_wbi_indicators(self):
         self.update_country_data()
@@ -15,16 +15,13 @@ class WBI_Parser():
         res, created = IndicatorTopic.objects.get_or_create(name=topic_name)
         return res
 
-
     def get_source_or_create(self, source_name):
         res, created = IndicatorSource.objects.get_or_create(name=source_name)
         return res
 
-
     def get_indicator_or_create(self, indicator_id):
         res, created = Indicator.objects.get_or_create(id=indicator_id)
         return res
-
 
     def get_country(self, country_iso3):
         res = Country.objects.get(iso3=country_iso3)
@@ -35,7 +32,6 @@ class WBI_Parser():
         res = Region.objects.get(iso3=iso3)
         return res
 
-
     def get_values_for_years(self, record):
         our_values = []
         for x in record:
@@ -44,10 +40,8 @@ class WBI_Parser():
                 our_values.append(tup)
         return our_values
 
-
     def decode_data(self, data):
         return data.decode("cp1252", errors='replace')
-
 
     def add_indicators(self):
         BASE = os.path.dirname(os.path.abspath(__file__))
@@ -80,7 +74,6 @@ class WBI_Parser():
                     new_indicator.id = indicator_id
                     new_indicator.save()
 
-
     def add_indicator_data(self):
         BASE = os.path.dirname(os.path.abspath(__file__))
         specific = BASE + "/data_backup/wdi_data/WDI_Data.csv"
@@ -96,6 +89,7 @@ class WBI_Parser():
                 if not our_country:
                     our_region = self.get_region(iso3)
 
+                # TODO: make this work with the datamodel changes (IndicatorDataValue)
                 our_values = self.get_values_for_years(row)
                 if len(our_values) >= 1:
                     for item in our_values:
@@ -105,7 +99,6 @@ class WBI_Parser():
                         our_data.value = item[1]
                         our_data.country = our_country
                         our_data.save()
-
 
     def update_country_data(self):
         BASE = os.path.dirname(os.path.abspath(__file__))
