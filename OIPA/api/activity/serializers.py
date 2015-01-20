@@ -1,5 +1,4 @@
 from rest_framework import serializers
-
 import iati
 from api.generics.serializers import DynamicFieldsModelSerializer
 from api.organisation.serializers import OrganisationSerializer
@@ -82,7 +81,7 @@ class ActivityScopeSerializer(serializers.ModelSerializer):
         fields = ('code',)
 
 
-class AidTypeSerializer(serializers.ModelSerializer):
+class DefaultAidTypeSerializer(serializers.ModelSerializer):
     code = serializers.CharField()
 
     class Meta:
@@ -92,7 +91,7 @@ class AidTypeSerializer(serializers.ModelSerializer):
         )
 
 
-class FlowTypeSerializer(serializers.ModelSerializer):
+class DefaultFlowTypeSerializer(serializers.ModelSerializer):
     code = serializers.CharField()
 
     class Meta:
@@ -247,15 +246,14 @@ class TitleSerializer(serializers.Serializer):
     narratives = NarrativeSerializer(many=True, source='title_set')
 
 
-class DescriptionTypeSerializer(serializers.ModelSerializer):
-    code = serializers.CharField()
-
-    class Meta:
-        model = iati.models.DescriptionType
-        fields = ('code',)
-
-
 class DescriptionSerializer(serializers.ModelSerializer):
+    class DescriptionTypeSerializer(serializers.ModelSerializer):
+        code = serializers.CharField()
+
+        class Meta:
+            model = iati.models.DescriptionType
+            fields = ('code',)
+
     class NarrativeSerializer(serializers.ModelSerializer):
         text = serializers.CharField(source='description')
 
@@ -299,7 +297,7 @@ class ActivitySectorSerializer(serializers.ModelSerializer):
         )
 
 
-class ActivityRecipientRegionSerializer(DynamicFieldsModelSerializer):
+class ActivityRecipientRegionSerializer(serializers.ModelSerializer):
     vocabulary = RegionVocabularySerializer(source='region_vocabulary')
     region = RegionSerializer(
         fields=('url', 'code', 'name')
@@ -336,7 +334,7 @@ class ParticipatingOrganisationSerializer(serializers.ModelSerializer):
         )
 
 
-class RecipientCountrySerializer(DynamicFieldsModelSerializer):
+class RecipientCountrySerializer(serializers.ModelSerializer):
     country = CountrySerializer(fields=('url', 'code', 'name'))
     percentage = serializers.DecimalField(
         max_digits=5,
@@ -463,24 +461,20 @@ class LocationSerializer(serializers.ModelSerializer):
 
 
 class ActivitySerializer(DynamicFieldsModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name='activity-detail')
     activity_status = ActivityStatusSerializer()
     activity_scope = ActivityScopeSerializer(source='scope')
     capital_spend = CapitalSpendSerializer(source='*')
     collaboration_type = CollaborationTypeSerializer()
-    default_aid_type = AidTypeSerializer()
+    default_aid_type = DefaultAidTypeSerializer()
     default_currency = CurrencySerializer()
     default_finance_type = FinanceTypeSerializer()
-    default_flow_type = FlowTypeSerializer()
+    default_flow_type = DefaultFlowTypeSerializer()
     default_tied_status = TiedStatusSerializer()
     activity_dates = ActivityDateSerializer(source='*')
     total_budget = TotalBudgetSerializer(source='*')
     reporting_organisation = ReportingOrganisationSerializer(source='*')
     participating_organisations = ParticipatingOrganisationSerializer(
         many=True)
-    transactions = serializers.HyperlinkedIdentityField(
-        view_name='activity-transactions',
-    )
 
     policy_markers = ActivityPolicyMarkerSerializer(
         many=True,
@@ -528,7 +522,6 @@ class ActivitySerializer(DynamicFieldsModelSerializer):
             'recipient_countries',
             'recipient_regions',
             'sectors',
-            'transactions',
             'policy_markers',
             'collaboration_type',
             'default_flow_type',

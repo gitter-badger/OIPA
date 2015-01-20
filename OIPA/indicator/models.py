@@ -40,6 +40,7 @@ class Indicator(models.Model):
         return self.friendly_label
 
 class IndicatorData(models.Model):
+    id = models.IntegerField(primary_key=True)
     indicator = models.ForeignKey(Indicator)
     country = models.ForeignKey(Country, null=True)
     city = models.ForeignKey(City, null=True)
@@ -53,8 +54,9 @@ class IndicatorData(models.Model):
         return self.indicator.friendly_label
 
 class IndicatorDataValue(models.Model):
-    indicator_data = models.ForeignKey(IndicatorData)
-    year = models.IntegerField(max_length=5, db_index=True)
+    id = models.IntegerField(primary_key=True)
+    indicator_data = models.ForeignKey(IndicatorData, db_index=True)
+    year = models.IntegerField(max_length=5)
     value = models.DecimalField(null=True, blank=True, db_index=True, max_digits=17, decimal_places=4)
 
     class Meta:

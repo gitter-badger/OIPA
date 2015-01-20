@@ -2,8 +2,6 @@ from django.db import models
 from geodata.models import Country, Region
 from activity_manager import ActivityQuerySet
 from django.contrib.gis.geos import Point
-from iati.transaction.models import Transaction
-from iati.transaction.models import TransactionType
 
 
 class ActivityDateType(models.Model):
@@ -95,14 +93,12 @@ class DisbursementChannel(models.Model):
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
 
-
 class DocumentCategoryCategory(models.Model):
     code = models.CharField(primary_key=True, max_length=3)
     name = models.CharField(max_length=100)
 
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
-
 
 class DocumentCategory(models.Model):
     code = models.CharField(primary_key=True, max_length=3)
@@ -113,11 +109,10 @@ class DocumentCategory(models.Model):
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
 
-
 class FileFormat(models.Model):
     code = models.CharField(primary_key=True, max_length=100)
     name = models.CharField(max_length=100)
-
+ 
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
 
@@ -165,7 +160,6 @@ class GeographicalPrecision(models.Model):
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
 
-
 class GeographicLocationClass(models.Model):
     code = models.SmallIntegerField(primary_key=True)
     name = models.CharField(max_length=200)
@@ -181,14 +175,12 @@ class Language(models.Model):
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
 
-
 class LocationTypeCategory(models.Model):
     code = models.CharField(primary_key=True, max_length=10)
     name = models.CharField(max_length=100)
 
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
-
 
 class LocationType(models.Model):
     code = models.CharField(primary_key=True, max_length=10)
@@ -198,7 +190,6 @@ class LocationType(models.Model):
 
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
-
 
 class OrganisationIdentifier(models.Model):
     code = models.CharField(primary_key=True, max_length=20)
@@ -224,7 +215,6 @@ class OrganisationType(models.Model):
 
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
-
 
 class PolicyMarker(models.Model):
     code = models.SmallIntegerField(primary_key=True)
@@ -267,7 +257,6 @@ class ResultType(models.Model):
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
 
-
 class SectorCategory(models.Model):
     code = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
@@ -275,7 +264,6 @@ class SectorCategory(models.Model):
 
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
-
 
 class Sector(models.Model):
     code = models.IntegerField(primary_key=True)
@@ -286,9 +274,17 @@ class Sector(models.Model):
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
 
-
 class TiedStatus(models.Model):
     code = models.SmallIntegerField(primary_key=True)
+    name = models.CharField(max_length=40)
+    description = models.TextField()
+
+    def __unicode__(self,):
+        return "%s - %s" % (self.code, self.name)
+
+
+class TransactionType(models.Model):
+    code = models.CharField(primary_key=True, max_length=2)
     name = models.CharField(max_length=40)
     description = models.TextField()
 
@@ -320,7 +316,6 @@ class Vocabulary(models.Model):
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
 
-
 class ActivityScope(models.Model):
     code = models.SmallIntegerField(primary_key=True)
     name = models.CharField(max_length=100)
@@ -328,14 +323,12 @@ class ActivityScope(models.Model):
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
 
-
 class AidTypeFlag(models.Model):
     code = models.SmallIntegerField(primary_key=True)
     name = models.CharField(max_length=100)
 
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
-
 
 class BudgetIdentifier(models.Model):
     code = models.CharField(primary_key=True, max_length=20)
@@ -346,14 +339,12 @@ class BudgetIdentifier(models.Model):
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
 
-
 class BudgetIdentifierSectorCategory(models.Model):
     code = models.SmallIntegerField(primary_key=True)
     name = models.CharField(max_length=160)
 
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
-
 
 class BudgetIdentifierSector(models.Model):
     code = models.CharField(primary_key=True, max_length=20)
@@ -363,14 +354,12 @@ class BudgetIdentifierSector(models.Model):
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
 
-
 class BudgetIdentifierVocabulary(models.Model):
     code = models.SmallIntegerField(primary_key=True)
     name = models.CharField(max_length=100)
 
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
-
 
 class ContactType(models.Model):
     code = models.SmallIntegerField(primary_key=True)
@@ -379,7 +368,6 @@ class ContactType(models.Model):
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
 
-
 class LoanRepaymentPeriod(models.Model):
     code = models.SmallIntegerField(primary_key=True)
     name = models.CharField(max_length=20)
@@ -387,14 +375,12 @@ class LoanRepaymentPeriod(models.Model):
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
 
-
 class LoanRepaymentType(models.Model):
     code = models.SmallIntegerField(primary_key=True)
     name = models.CharField(max_length=40)
 
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
-
 
 class RegionVocabulary(models.Model):
     code = models.SmallIntegerField(primary_key=True)
@@ -408,8 +394,7 @@ class Organisation(models.Model):
     code = models.CharField(primary_key=True, max_length=80)
     abbreviation = models.CharField(max_length=80, null=True, default=None)
     type = models.ForeignKey(OrganisationType, null=True, default=None)
-    reported_by_organisation = models.CharField(
-        max_length=100, null=True, default=None)
+    reported_by_organisation = models.CharField(max_length=100, null=True, default=None)
     name = models.CharField(max_length=250, null=True, default=None)
     original_ref = models.CharField(max_length=80, null=True, default=None)
 
@@ -420,95 +405,46 @@ class Organisation(models.Model):
         return self.activity_set.count()
 
 
+
 class Activity(models.Model):
     hierarchy_choices = (
         (1, u"Parent"),
         (2, u"Child"),
-    )
+        )
 
     id = models.CharField(primary_key=True, max_length=150)
     iati_identifier = models.CharField(max_length=150)
-    default_currency = models.ForeignKey(
-        Currency,
-        null=True,
-        default=None,
-        related_name="default_currency")
-    hierarchy = models.SmallIntegerField(
-        choices=hierarchy_choices,
-        default=1,
-        null=True)
-    last_updated_datetime = models.CharField(
-        max_length=100,
-        null=True,
-        default=None)
+    default_currency = models.ForeignKey(Currency, null=True, default=None, related_name="default_currency")
+    hierarchy = models.SmallIntegerField(choices=hierarchy_choices, default=1, null=True)
+    last_updated_datetime = models.CharField(max_length=100, null=True, default=None)
     linked_data_uri = models.CharField(max_length=100, blank=True, null=True)
-    reporting_organisation = models.ForeignKey(
-        Organisation,
-        null=True,
-        default=None,
-        related_name="activity_reporting_organisation")
+    reporting_organisation = models.ForeignKey(Organisation, null=True, default=None, related_name="activity_reporting_organisation")
     secondary_publisher = models.BooleanField(default=False)
-    activity_status = models.ForeignKey(
-        ActivityStatus,
-        null=True,
-        default=None)
+    activity_status = models.ForeignKey(ActivityStatus, null=True, default=None)
 
     start_planned = models.DateField(null=True, blank=True, default=None)
     end_planned = models.DateField(null=True, blank=True, default=None)
     start_actual = models.DateField(null=True, blank=True, default=None)
     end_actual = models.DateField(null=True, blank=True, default=None)
 
-    participating_organisation = models.ManyToManyField(
-        Organisation,
-        through="ActivityParticipatingOrganisation")
-    policy_marker = models.ManyToManyField(
-        PolicyMarker,
-        through="ActivityPolicyMarker")
+    participating_organisation = models.ManyToManyField(Organisation, through="ActivityParticipatingOrganisation")
+    policy_marker = models.ManyToManyField(PolicyMarker, through="ActivityPolicyMarker")
     sector = models.ManyToManyField(Sector, through="ActivitySector")
-    recipient_country = models.ManyToManyField(
-        Country,
-        through="ActivityRecipientCountry")
-    recipient_region = models.ManyToManyField(
-        Region,
-        through="ActivityRecipientRegion")
+    recipient_country = models.ManyToManyField(Country, through="ActivityRecipientCountry")
+    recipient_region = models.ManyToManyField(Region, through="ActivityRecipientRegion")
 
-    collaboration_type = models.ForeignKey(
-        CollaborationType,
-        null=True,
-        default=None)
+    collaboration_type = models.ForeignKey(CollaborationType, null=True, default=None)
     default_flow_type = models.ForeignKey(FlowType, null=True, default=None)
     default_aid_type = models.ForeignKey(AidType, null=True, default=None)
-    default_finance_type = models.ForeignKey(
-        FinanceType,
-        null=True,
-        default=None)
-    default_tied_status = models.ForeignKey(
-        TiedStatus,
-        null=True,
-        default=None)
+    default_finance_type = models.ForeignKey(FinanceType, null=True, default=None)
+    default_tied_status = models.ForeignKey(TiedStatus, null=True, default=None)
     xml_source_ref = models.CharField(null=True, max_length=200)
-    total_budget_currency = models.ForeignKey(
-        Currency,
-        null=True,
-        default=None,
-        related_name="total_budget_currency")
-    total_budget = models.DecimalField(
-        max_digits=15,
-        decimal_places=2,
-        null=True,
-        default=None,
-        db_index=True)
+    total_budget_currency = models.ForeignKey(Currency, null=True, default=None, related_name="total_budget_currency")
+    total_budget = models.DecimalField(max_digits=15, decimal_places=2, null=True, default=None, db_index=True)
 
-    capital_spend = models.DecimalField(
-        max_digits=5,
-        decimal_places=2,
-        null=True,
-        default=None)
+    capital_spend = models.DecimalField(max_digits=5, decimal_places=2, null=True, default=None)
     scope = models.ForeignKey(ActivityScope, null=True, default=None)
-    iati_standard_version = models.CharField(
-        max_length=30,
-        null=True,
-        default=None)
+    iati_standard_version = models.CharField(max_length=30, null=True, default=None)
 
     objects = ActivityQuerySet.as_manager()
 
@@ -517,7 +453,6 @@ class Activity(models.Model):
 
     class Meta:
         verbose_name_plural = "activities"
-
 
 class ActivitySearchData(models.Model):
     activity = models.OneToOneField(Activity)
@@ -531,11 +466,8 @@ class ActivitySearchData(models.Model):
     search_reporting_organisation_name = models.TextField(max_length=80000)
     search_documentlink_title = models.TextField(max_length=80000)
 
-
 class ActivityParticipatingOrganisation(models.Model):
-    activity = models.ForeignKey(
-        Activity,
-        related_name="participating_organisations")
+    activity = models.ForeignKey(Activity, related_name="participating_organisations")
     organisation = models.ForeignKey(Organisation, null=True, default=None)
     role = models.ForeignKey(OrganisationRole, null=True, default=None)
     name = models.TextField(null=True, default=None)
@@ -546,16 +478,10 @@ class ActivityParticipatingOrganisation(models.Model):
 
 class ActivityPolicyMarker(models.Model):
     policy_marker = models.ForeignKey(PolicyMarker, null=True, default=None)
-    alt_policy_marker = models.CharField(
-        max_length=200,
-        null=True,
-        default=None)
+    alt_policy_marker = models.CharField(max_length=200, null=True, default=None)
     activity = models.ForeignKey(Activity)
     vocabulary = models.ForeignKey(Vocabulary, null=True, default=None)
-    policy_significance = models.ForeignKey(
-        PolicySignificance,
-        null=True,
-        default=None)
+    policy_significance = models.ForeignKey(PolicySignificance, null=True, default=None)
 
     def __unicode__(self,):
         return "%s - %s" % (self.activity, self.policy_marker)
@@ -566,11 +492,7 @@ class ActivitySector(models.Model):
     sector = models.ForeignKey(Sector, null=True, default=None)
     alt_sector_name = models.CharField(max_length=200, null=True, default=None)
     vocabulary = models.ForeignKey(Vocabulary, null=True, default=None)
-    percentage = models.DecimalField(
-        max_digits=5,
-        decimal_places=2,
-        null=True,
-        default=None)
+    percentage = models.DecimalField(max_digits=5, decimal_places=2, null=True, default=None)
 
     def __unicode__(self,):
         return "%s - %s" % (self.activity, self.sector)
@@ -579,11 +501,7 @@ class ActivitySector(models.Model):
 class ActivityRecipientCountry(models.Model):
     activity = models.ForeignKey(Activity)
     country = models.ForeignKey(Country)
-    percentage = models.DecimalField(
-        max_digits=5,
-        decimal_places=2,
-        null=True,
-        default=None)
+    percentage = models.DecimalField(max_digits=5, decimal_places=2, null=True, default=None)
 
     def __unicode__(self,):
         return "%s - %s" % (self.activity, self.country)
@@ -594,11 +512,7 @@ class CountryBudgetItem(models.Model):
     vocabulary = models.ForeignKey(BudgetIdentifierVocabulary, null=True)
     vocabulary_text = models.CharField(max_length=255, null=True, default=None)
     code = models.CharField(max_length=50, null=True, default=None)
-    percentage = models.DecimalField(
-        max_digits=5,
-        decimal_places=2,
-        null=True,
-        default=None)
+    percentage = models.DecimalField(max_digits=5, decimal_places=2, null=True, default=None)
     description = models.TextField(null=True, default=None)
 
 
@@ -606,11 +520,7 @@ class ActivityRecipientRegion(models.Model):
     activity = models.ForeignKey(Activity)
     region = models.ForeignKey(Region)
     region_vocabulary = models.ForeignKey(RegionVocabulary, default=1)
-    percentage = models.DecimalField(
-        max_digits=5,
-        decimal_places=2,
-        null=True,
-        default=None)
+    percentage = models.DecimalField(max_digits=5, decimal_places=2, null=True, default=None)
 
     def __unicode__(self,):
         return "%s - %s" % (self.activity, self.region)
@@ -650,6 +560,31 @@ class ContactInfo(models.Model):
         return "%s - %s" % (self.activity, self.person_name)
 
 
+class Transaction(models.Model):
+    activity = models.ForeignKey(Activity)
+    aid_type = models.ForeignKey(AidType, null=True, default=None)
+    description = models.TextField(null=True, default=None)
+    description_type = models.ForeignKey(DescriptionType, null=True, default=None)
+    disbursement_channel = models.ForeignKey(DisbursementChannel, null=True, default=None)
+    finance_type = models.ForeignKey(FinanceType, null=True, default=None)
+    flow_type = models.ForeignKey(FlowType, null=True, default=None)
+    provider_organisation = models.ForeignKey(Organisation, related_name="transaction_providing_organisation", null=True, default=None)
+    provider_organisation_name = models.CharField(max_length=255, null=True, default=None)
+    provider_activity = models.CharField(max_length=100, null=True)
+    receiver_organisation = models.ForeignKey(Organisation, related_name="transaction_receiving_organisation", null=True, default=None)
+    receiver_organisation_name = models.CharField(max_length=255, null=True, default=None)
+    tied_status = models.ForeignKey(TiedStatus, null=True, default=None)
+    transaction_date = models.DateField(null=True, default=None)
+    transaction_type = models.ForeignKey(TransactionType, null=True, default=None)
+    value_date = models.DateField(null=True, default=None)
+    value = models.DecimalField(max_digits=15, decimal_places=2)
+    currency = models.ForeignKey(Currency, null=True, default=None)
+    ref = models.CharField(max_length=255, null=True, default=None)
+
+    def __unicode__(self,):
+        return "%s: %s - %s" % (self.activity, self.transaction_type, self.transaction_date)
+
+
 # class transaction_description(models.Model):
 #     transaction = models.ForeignKey(transaction)
 #     type = models.ForeignKey(description_type, null=True, default=None)
@@ -674,14 +609,8 @@ class PlannedDisbursement(models.Model):
 
 
 class RelatedActivity(models.Model):
-    current_activity = models.ForeignKey(
-        Activity,
-        related_name="current_activity")
-    type = models.ForeignKey(
-        RelatedActivityType,
-        max_length=200,
-        null=True,
-        default=None)
+    current_activity = models.ForeignKey(Activity, related_name="current_activity")
+    type = models.ForeignKey(RelatedActivityType, max_length=200, null=True, default=None)
     ref = models.CharField(max_length=200, null=True, default=None)
     text = models.TextField(null=True, default=None)
 
@@ -693,10 +622,7 @@ class DocumentLink(models.Model):
     activity = models.ForeignKey(Activity)
     url = models.TextField(max_length=500)
     file_format = models.ForeignKey(FileFormat, null=True, default=None)
-    document_category = models.ForeignKey(
-        DocumentCategory,
-        null=True,
-        default=None)
+    document_category = models.ForeignKey(DocumentCategory, null=True, default=None)
     title = models.CharField(max_length=255, null=True, default=None)
 
     def __unicode__(self,):
@@ -729,31 +655,22 @@ class ResultIndicator(models.Model):
     baseline_year = models.IntegerField(max_length=4)
     baseline_value = models.CharField(max_length=100)
     comment = models.TextField(null=True, default=None)
-    measure = models.ForeignKey(
-        ResultIndicatorMeasure,
-        null=True,
-        default=None)
+    measure = models.ForeignKey(ResultIndicatorMeasure, null=True, default=None)
 
-    def __unicode__(self,):
+
+def __unicode__(self,):
         return "%s - %s" % (self.result, self.year)
-
 
 class ResultIndicatorPeriod(models.Model):
     result_indicator = models.ForeignKey(ResultIndicator)
     period_start = models.CharField(max_length=50, null=True, default=None)
     period_end = models.CharField(max_length=50, null=True, default=None)
-    planned_disbursement_period_start = models.CharField(
-        max_length=50,
-        null=True,
-        default=None)
-    planned_disbursement_period_end = models.CharField(
-        max_length=50,
-        null=True,
-        default=None)
+    planned_disbursement_period_start = models.CharField(max_length=50, null=True, default=None)
+    planned_disbursement_period_end = models.CharField(max_length=50, null=True, default=None)
     target = models.CharField(max_length=50, null=True, default=None)
     actual = models.CharField(max_length=50, null=True, default=None)
 
-    def __unicode__(self,):
+def __unicode__(self,):
         return "%s" % (self.result_indicator)
 
 
@@ -768,20 +685,11 @@ class Title(models.Model):
 
 class Description(models.Model):
     activity = models.ForeignKey(Activity)
-    description = models.TextField(
-        null=True,
-        default=None,
-        db_index=True,
-        max_length=40000)
+    description = models.TextField(null=True, default=None, db_index=True, max_length=40000)
     language = models.ForeignKey(Language, null=True, default=None)
-    type = models.ForeignKey(
-        DescriptionType,
-        related_name="description_type",
-        null=True,
-        default=None)
-    rsr_description_type_id = models.IntegerField(  # remove
-        null=True,
-        default=None)
+    type = models.ForeignKey(DescriptionType, related_name="description_type", null=True, default=None)
+    rsr_description_type_id = models.IntegerField(null=True, default=None) # remove
+
 
     def __unicode__(self,):
         return "%s - %s" % (self.activity, self.type)
@@ -796,6 +704,7 @@ class Budget(models.Model):
     value_date = models.DateField(null=True, default=None)
     currency = models.ForeignKey(Currency, null=True, default=None)
 
+
     def __unicode__(self,):
         return "%s - %s" % (self.activity, self.period_start)
 
@@ -808,7 +717,6 @@ class Condition(models.Model):
     def __unicode__(self,):
         return "%s - %s" % (self.activity, self.type)
 
-
 class GeographicVocabulary(models.Model):
     code = models.CharField(primary_key=True, max_length=20)
     name = models.CharField(max_length=255)
@@ -819,14 +727,12 @@ class GeographicVocabulary(models.Model):
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
 
-
 class GeographicLocationReach(models.Model):
     code = models.SmallIntegerField(primary_key=True)
     name = models.CharField(max_length=80)
 
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
-
 
 class OrganisationRegistrationAgency(models.Model):
     code = models.CharField(primary_key=True, max_length=20)
@@ -839,7 +745,6 @@ class OrganisationRegistrationAgency(models.Model):
     def __unicode__(self,):
         return "%s - %s" % (self.activity, self.type)
 
-
 class GeographicExactness(models.Model):
     code = models.SmallIntegerField(primary_key=True)
     name = models.CharField(max_length=160)
@@ -850,102 +755,36 @@ class GeographicExactness(models.Model):
     def __unicode__(self,):
         return "%s - %s" % (self.code, self.name)
 
-
 class Location(models.Model):
     activity = models.ForeignKey(Activity)
-    # new in v1.04
-    ref = models.CharField(max_length=200, null=True, default=None)
+    ref = models.CharField(max_length=200, null=True, default=None) # new in v1.04
     name = models.TextField(max_length=1000, null=True, default=None)
-    # deprecated as of v1.04
-    type = models.ForeignKey(
-        LocationType,
-        null=True,
-        default=None,
-        related_name="deprecated_location_type")
-    type_description = models.CharField(
-        max_length=200,
-        null=True,
-        default=None)
+    type = models.ForeignKey(LocationType, null=True, default=None, related_name="deprecated_location_type") # deprecated as of v1.04
+    type_description = models.CharField(max_length=200, null=True, default=None)
     description = models.TextField(null=True, default=None)
     activity_description = models.TextField(null=True, default=None)
-    description_type = models.ForeignKey(
-        DescriptionType,
-        null=True,
-        default=None)
-    # deprecated as of v1.04
-    adm_country_iso = models.ForeignKey(Country, null=True, default=None)
-    # deprecated as of v1.04
-    adm_country_adm1 = models.CharField(
-        max_length=100,
-        null=True,
-        default=None)
-    # deprecated as of v1.04
-    adm_country_adm2 = models.CharField(
-        max_length=100,
-        null=True,
-        default=None)
-    # deprecated as of v1.04
-    adm_country_name = models.CharField(
-        max_length=200,
-        null=True,
-        default=None)
-    # new in v1.04
-    adm_code = models.CharField(max_length=255, null=True, default=None)
-    # new in v1.04
-    adm_vocabulary = models.ForeignKey(
-        GeographicVocabulary,
-        null=True,
-        default=None,
-        related_name="administrative_vocabulary")
-    # new in v1.04
-    adm_level = models.IntegerField(null=True, default=None)
-    percentage = models.DecimalField(
-        max_digits=5,
-        decimal_places=2,
-        null=True,
-        default=None)
-    # deprecated as of v1.04
-    latitude = models.CharField(max_length=70, null=True, default=None)
-    # deprecated as of v1.04
-    longitude = models.CharField(max_length=70, null=True, default=None)
-    precision = models.ForeignKey(
-        GeographicalPrecision,
-        null=True,
-        default=None)
-    # deprecated as of v1.04
-    gazetteer_entry = models.CharField(max_length=70, null=True, default=None)
-    # deprecated as of v1.04
-    gazetteer_ref = models.ForeignKey(GazetteerAgency, null=True, default=None)
-    # new in v1.04
-    location_reach = models.ForeignKey(
-        GeographicLocationReach,
-        null=True,
-        default=None)
-    # new in v1.04
-    location_id_vocabulary = models.ForeignKey(
-        GeographicVocabulary,
-        null=True,
-        default=None,
-        related_name="location_id_vocabulary")
-    # new in v1.04
-    location_id_code = models.CharField(max_length=255, null=True, default=None)
-    # new in v1.04
-    point_srs_name = models.CharField(max_length=255, null=True, default=None)
-    # new in v1.04
-    point_pos = models.CharField(max_length=255, null=True, default=None)
-    # new in v1.04
-    exactness = models.ForeignKey(GeographicExactness, null=True, default=None)
-    # new in v1.04
-    feature_designation = models.ForeignKey(
-        LocationType,
-        null=True,
-        default=None,
-        related_name="feature_designation")
-    # new in v1.04
-    location_class = models.ForeignKey(
-        GeographicLocationClass,
-        null=True,
-        default=None)
+    description_type = models.ForeignKey(DescriptionType, null=True, default=None)
+    adm_country_iso = models.ForeignKey(Country, null=True, default=None) # deprecated as of v1.04
+    adm_country_adm1 = models.CharField(max_length=100, null=True, default=None) # deprecated as of v1.04
+    adm_country_adm2 = models.CharField(max_length=100, null=True, default=None) # deprecated as of v1.04
+    adm_country_name = models.CharField(max_length=200, null=True, default=None) # deprecated as of v1.04
+    adm_code = models.CharField(max_length=255, null=True, default=None) # new in v1.04
+    adm_vocabulary = models.ForeignKey(GeographicVocabulary, null=True, default=None, related_name="administrative_vocabulary   ") # new in v1.04
+    adm_level = models.IntegerField(null=True, default=None) # new in v1.04
+    percentage = models.DecimalField(max_digits=5, decimal_places=2, null=True, default=None)
+    latitude = models.CharField(max_length=70, null=True, default=None) # deprecated as of v1.04
+    longitude = models.CharField(max_length=70, null=True, default=None) # deprecated as of v1.04
+    precision = models.ForeignKey(GeographicalPrecision, null=True, default=None)
+    gazetteer_entry = models.CharField(max_length=70, null=True, default=None) # deprecated as of v1.04
+    gazetteer_ref = models.ForeignKey(GazetteerAgency, null=True, default=None) # deprecated as of v1.04
+    location_reach = models.ForeignKey(GeographicLocationReach, null=True, default=None) # new in v1.04
+    location_id_vocabulary = models.ForeignKey(GeographicVocabulary, null=True, default=None, related_name="location_id_vocabulary") # new in v1.04
+    location_id_code = models.CharField(max_length=255, null=True, default=None) # new in v1.04
+    point_srs_name = models.CharField(max_length=255, null=True, default=None) # new in v1.04
+    point_pos = models.CharField(max_length=255, null=True, default=None) # new in v1.04
+    exactness = models.ForeignKey(GeographicExactness, null=True, default=None) # new in v1.04
+    feature_designation = models.ForeignKey(LocationType, null=True, default=None, related_name="feature_designation") #new in v1.04
+    location_class = models.ForeignKey(GeographicLocationClass, null=True, default=None) #new in v1.04
 
     @property
     def point(self):
@@ -963,7 +802,7 @@ class Ffs(models.Model):
     activity = models.ForeignKey(Activity)
     extraction_date = models.DateField(null=True, default=None)
     priority = models.BooleanField(default=False)
-    phaseout_year = models.IntegerField(max_length=4, null=True)
+    phaseout_year= models.IntegerField(max_length=4, null=True)
 
     def __unicode__(self,):
         return "%s" % (self.extraction_date)
@@ -993,14 +832,8 @@ class CrsAddLoanTerms(models.Model):
     crs_add = models.ForeignKey(CrsAdd)
     rate_1 = models.IntegerField(null=True, default=None)
     rate_2 = models.IntegerField(null=True, default=None)
-    repayment_type = models.ForeignKey(
-        LoanRepaymentType,
-        null=True,
-        default=None)
-    repayment_plan = models.ForeignKey(
-        LoanRepaymentPeriod,
-        null=True,
-        default=None)
+    repayment_type = models.ForeignKey(LoanRepaymentType, null=True, default=None)
+    repayment_plan = models.ForeignKey(LoanRepaymentPeriod, null=True, default=None)
     repayment_plan_text = models.TextField(null=True, default=None)
     commitment_date = models.DateField(null=True, default=None)
     repayment_first_date = models.DateField(null=True, default=None)
@@ -1015,26 +848,10 @@ class CrsAddLoanStatus(models.Model):
     year = models.IntegerField(null=True, default=None)
     value_date = models.DateField(null=True, default=None)
     currency = models.ForeignKey(Currency, null=True, default=None)
-    interest_received = models.DecimalField(
-        null=True,
-        default=None,
-        max_digits=15,
-        decimal_places=2)
-    principal_outstanding = models.DecimalField(
-        null=True,
-        default=None,
-        max_digits=15,
-        decimal_places=2)
-    principal_arrears = models.DecimalField(
-        null=True,
-        default=None,
-        max_digits=15,
-        decimal_places=2)
-    interest_arrears = models.DecimalField(
-        null=True,
-        default=None,
-        max_digits=15,
-        decimal_places=2)
+    interest_received = models.DecimalField(null=True, default=None, max_digits=15, decimal_places=2)
+    principal_outstanding = models.DecimalField(null=True, default=None, max_digits=15, decimal_places=2)
+    principal_arrears = models.DecimalField(null=True, default=None, max_digits=15, decimal_places=2)
+    interest_arrears = models.DecimalField(null=True, default=None, max_digits=15, decimal_places=2)
 
-    def __unicode__(self):
+    def __unicode__(self,):
         return "%s" % (self.year)

@@ -68,22 +68,22 @@ class TestActivitySerializers:
             'title' should be serialized as 'title.narratives.text'
             """
 
-    def test_aid_type_serializer(self):
+    def test_DefaultAidTypeSerializer(self):
         aidtype = iati_factory.AidTypeFactory.build(
             code='10',
         )
-        serializer = serializers.AidTypeSerializer(aidtype)
+        serializer = serializers.DefaultAidTypeSerializer(aidtype)
         assert serializer.data['code'] == aidtype.code, \
             """
             the data in aidtype.code should be serialized to a field named code
             inside the serialized object
             """
 
-    def test_flow_type_serializer(self):
+    def test_DefaultFlowTypeSerializer(self):
         flowtype = iati_factory.FlowTypeFactory.build(
             code='10',
         )
-        serializer = serializers.FlowTypeSerializer(flowtype)
+        serializer = serializers.DefaultFlowTypeSerializer(flowtype)
         assert serializer.data['code'] == flowtype.code, \
             """
             the data in flowtype.code should be serializer to a field named
@@ -312,7 +312,8 @@ class TestActivitySerializers:
 
     def test_DescriptionTypeSerializer(self):
         description_type = iati_factory.DescriptionTypeFactory.build(code='1')
-        serializer = serializers.DescriptionTypeSerializer(description_type)
+        serializer = serializers.DescriptionSerializer.\
+            DescriptionTypeSerializer(description_type)
         assert serializer.data['code'] == description_type.code,\
             """
             'description_type.code' should be serialized to a field called
