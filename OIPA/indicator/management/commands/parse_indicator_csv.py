@@ -6,7 +6,7 @@ from geodata.models import Country
 from geodata.models import City
 
 from indicator.models import Indicator
-from indicator.upload_indicators_helper import find_country
+from indicator.csv_upload.upload_indicators_helper import find_country
 from indicator.upload_indicators_helper import find_city
 from indicator.upload_indicators_helper import save_city_data
 from indicator.upload_indicators_helper import save_country_data

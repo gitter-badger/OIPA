@@ -13,7 +13,8 @@ from api.v3.resources.sql_resources import ActivityListVisResource, ActivityFilt
     GlobalActivitiesResource,  DonorActivitiesResource, SectorActivitiesResource, ActivityFilterOptionsUnescoResource
 from api.v3.resources.aggregation_resources import ActivityCountResource, ActivityAggregatedAnyResource, \
     ActivityAggregatedAnyNamesResource
-from api.v3.resources.indicator_resources import IndicatorFilterOptionsResource, IndicatorDataResource
+from api.v3.resources.indicator_data_resource import IndicatorDataResource
+from api.v3.resources.indicator_resources import IndicatorFilterOptionsResource
 from api.v3 import views
 
 from api.v2.urls import v2_api
@@ -47,8 +48,6 @@ v3_api.register(SectorActivitiesResource())
 v3_api.register(UnescoIndicatorResource())
 v3_api.register(ActivityFilterOptionsUnescoResource())
 v3_api.register(ActivityListVisResource())
-
-
 
 def api_v3_docs(request):
     return HttpResponseRedirect('/api/v3/docs/')

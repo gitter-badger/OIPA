@@ -1,0 +1,2 @@
+year;year_range;indicator_id;friendly_name;type_data;selection_type;deprivation_type;country;city;region;value;description
+2010;;1;indicator name;p;;;NL;;;1.33;indicator description
